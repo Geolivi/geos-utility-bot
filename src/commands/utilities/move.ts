@@ -124,13 +124,6 @@ const beforeConfirm: CommandBeforeConfirmMethod<IntermediateResult> = async inte
     return null;
   }
 
-  const { author } = await getInfoFromCommandInteraction(interaction, { ephemeral: true });
-
-  if (!author) {
-    await interaction.editReply('Could not find who is invoking this command.');
-    return null;
-  }
-
   const authorAndBot = filterOutFalsy([author, client.user]);
 
   if (!usersHaveChannelPermission({ channel: toChannel, users: authorAndBot, permissions: ['SendMessages', 'ViewChannel'] })) {
