@@ -202,8 +202,8 @@ async function handleContextMenu(interaction: ContextMenuCommandInteraction): Pr
   const ogChannel = ogChannelId && await getChannel(ogChannelId);
   const ogMessage = ogMessageId && ogChannel && isText(ogChannel) && await ogChannel.messages.fetch(ogMessageId);
 
-  if (!ogMessage) return interaction.editReply('Could not fetch original message!');
-  if (!ogChannel) return interaction.editReply('Could not fetch original channel!');
+  if (!ogMessage) return interaction.editReply('Could not fetch original message.');
+  if (!ogChannel) return interaction.editReply('Could not fetch original channel.');
 
   const allChannels = Array.from(await interaction.guild!.channels.cache.values());
   const { author } = await getInfoFromCommandInteraction(interaction, { ephemeral: true });
@@ -225,9 +225,11 @@ async function handleContextMenu(interaction: ContextMenuCommandInteraction): Pr
           && textChannel.name === channel.name
           && textChannel.parentId !== channel.parentId;
       });
+      const icon = channel.isVoiceBased() ? '🔊 ' : '#';
+      const baseLabel = `${icon}${channel.name}`;
       const label = (duplicateNamedChannel && parentCategory)
-        ? `#${channel.name} (${parentCategory.name})`
-        : `#${channel.name}`;
+        ? `${baseLabel} (${parentCategory.name})`
+        : baseLabel;
       return {
         label,
         value: channel.id,
