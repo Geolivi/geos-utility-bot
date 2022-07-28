@@ -25,7 +25,6 @@ import {
   findMessageInGuild,
   getMessagesInRange,
   usersHaveChannelPermission,
-  getInfoFromCommandInteraction,
   getChannel,
   parseInput,
   isText,
@@ -199,7 +198,6 @@ async function handleContextMenu(interaction: ContextMenuCommandInteraction): Pr
   if (!ogChannel) return interaction.editReply('Could not fetch original channel!');
 
   const allChannels = Array.from(await interaction.guild!.channels.cache.values());
-  const { author } = await getInfoFromCommandInteraction(interaction, { ephemeral: true });
   if (!author) return interaction.editReply('Could not find who is invoking this command!');
   const authorAndBot = filterOutFalsy([author, client.user]);
 
